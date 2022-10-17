@@ -1,32 +1,34 @@
-export const
-    INVALID_ID = 'Invalid ID user',
-    INVALID_USERNAME = 'Invalid username',
+export const INVALID_ID: string = 'Invalid ID user'
 
-    MINIMUM_LENGTH_USERNAME = 'Minimum username length is 6 characters.',
-    EXIST_USERNAME = 'Failed! Username is already in use!',
+export const INVALID_USERNAME: string = 'Invalid username'
 
-    INVALID_PASSWORD = 'Password is at least 8 characters',
+export const MINIMUM_LENGTH_USERNAME: string = 'Minimum username length is 6 characters.'
+export const EXIST_USERNAME: string = 'Failed! Username is already in use!'
 
-    INVALID_NAME = 'Invalid name',
+export const INVALID_PASSWORD: string = 'Password is at least 8 characters'
 
-    INVALID_PHONE_NUMBER = 'Invalid phone number',
-    EXIST_PHONE_NUMBER = 'Failed! Phone number is already in use!',
+export const INVALID_NAME: string = 'Invalid name'
 
-    INVALID_ADDRESS = 'Address field is required',
+export const INVALID_PHONE_NUMBER: string = 'Invalid phone number'
+export const EXIST_PHONE_NUMBER: string = 'Failed! Phone number is already in use!'
 
-    INVALID_MINIMUN_BIRTHDAY = 'Age must be 18+',
-    INVALID_FORMAT_BIRTHDAY = 'Date format is YYYY-MM-DD',
-   
-     //Login error:
-    LOGIN_FAIL_PASSWORD ='Invalid password',
-    LOGIN_FAIL_USERNAME='User does not exist',
+export const INVALID_ADDRESS: string = 'Address field is required'
 
-    //Remove user:
-    REMOVED_USER_FAIL='Remove user fail',
-    CAN_NOT_REMOVE='FAIL! Can\'t remove this user',
+export const INVALID_MINIMUN_BIRTHDAY: string = 'Age must be 18+'
+export const INVALID_FORMAT_BIRTHDAY: string = 'Date format is YYYY-MM-DD'
 
-    //Search user by ID:
-    NOT_FOUND_USER ='Not found user'
+//Login error:
+export const LOGIN_FAIL_PASSWORD: string = 'Invalid password'
+export const LOGIN_FAIL_USERNAME: string = 'User does not exist'
+export const LOGIN_FAIL_ACCESS_TOKEN: string ='Login fail'
 
+//Remove user:
+export const REMOVED_USER_FAIL: string = 'Remove user fail'
+export const CAN_NOT_REMOVE: string = 'FAIL! Can\'t remove this user'
 
+//Search user by ID:
+export const NOT_FOUND_USER: string = 'Not found user'
+
+// register new user:
+export const FAIL_REGISTER: string = 'Oops! Something had fail in process to create new user'
 

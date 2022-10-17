@@ -5,6 +5,10 @@ import * as errMessage from '../const/err-messages.const';
 import * as successMessage from '../const/success-messages.const';
 import bcrypt from 'bcrypt';
 import role from '../data/user.role.data';
+import * as jwtVariable from '../authentication/variables/jwt.variables';
+import *as methodAuthentication from '../authentication/methods/methods.authentication';
+import randToken from 'rand-token';
+
 
 async function hashPassword(password: string) {
     // generate salt to hash password
@@ -22,11 +26,11 @@ export async function createUser(data: IUser) {
 }
 
 export async function getAllUsers() {
-    return await User.find({}).select('username name dob address phonenumber')
+    return await User.find({}).select('username name dob address phonenumber refreshToken')
 }
 
 export async function getUserById(idUser: string) {
-    const user = await User.findById(idUser).select('username name dob address phonenumber')
+    const user = await User.findById(idUser).select('username name dob address phonenumber refreshToken')
     if (user === null) return errMessage.NOT_FOUND_USER;
     return user;
 }
@@ -53,18 +57,49 @@ export async function removeUserbyId(idUserInSession: string, idUser: string) {
 
 }
 
-
-
-
 export async function login(username: string, password: string) {
     const user = await User.findOne({ username: username });
-    if (user) {
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (validPassword) {
-            if (user.roles === role.ROLE.ADMIN) return successMessage.LOGIN_SUCCESS_ADMIN;
-            return successMessage.LOGIN_SUCCESS_USER;
-        } else return errMessage.LOGIN_FAIL_PASSWORD;
-    } else return errMessage.LOGIN_FAIL_USERNAME;
+    if (!user) {
+        return errMessage.LOGIN_FAIL_USERNAME;
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+        return errMessage.LOGIN_FAIL_PASSWORD;
+    }
+
+    const accessTokenLife =
+        process.env.ACCESS_TOKEN_LIFE || jwtVariable.ACCESS_TOKEN_LIFE;
+    const accessTokenSecret =
+        process.env.ACCESS_TOKEN_SECRET || jwtVariable.ACCESS_TOKEN_SECRET;
+
+    const dataForAccessToken = {
+        username: user.username,
+    };
+    const accessToken = await methodAuthentication.generateToken(
+        dataForAccessToken,
+        accessTokenSecret,
+        accessTokenLife,
+    );
+    if (!accessToken) {
+        return errMessage.LOGIN_FAIL_ACCESS_TOKEN;
+    }
+
+    //create a refresh token ngẫu nhiên
+    let refresh_token = randToken.generate(jwtVariable.REFRESH_TOKEN_SIZE)
+    if (!user.refreshToken) {
+        //If user haven't refresh token yet -> save this refresh token into database
+        await methodAuthentication.updateRefreshToken(user.username, refresh_token);
+    } else {
+        refresh_token = user.refreshToken;
+    }
+
+    if (user.roles === role.ROLE.ADMIN) {
+        return successMessage.LOGIN_SUCCESS_ADMIN;
+    } else {
+        return successMessage.LOGIN_SUCCESS_USER;
+    }
 }
+
 
 

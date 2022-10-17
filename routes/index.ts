@@ -7,7 +7,7 @@ function route(app: any): void {
         console.log(err);
         if (err instanceof ValidationError) {
                   console.log(err)
-            res.status(400).send(err);
+            res.status(400).send(err.details[0]);
         }
         // res.status(500).send('Something broken');
         res.status(err.statusCode).send('{\nERROR: Something has broken\n}');

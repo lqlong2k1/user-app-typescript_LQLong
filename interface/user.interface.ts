@@ -7,8 +7,10 @@ export interface IUser {
     address: string;
     phoneNumber: string;
     roles: string;
+    refreshToken?: string;
     createdAt?: Date;
     updatedAt?: Date;
     __v?: Number;
+   
 }
 

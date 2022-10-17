@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as userServices from '../services/user.services';
 import User from '../models/User.model';
-import * as errMessage from '../const/err-messages.const';
-import * as successMessage from '../const/success-messages.const';
-import session from 'express-session';
+
 const allUsers = async (req: Request, res: Response) => {
     try {
         const user = await userServices.getAllUsers();
@@ -64,7 +62,6 @@ const updateUserById = async (req: Request, res: Response) => {
 
 const deleteUserById = async (req: Request, res: Response) => {
     try {
-        // req.session.customField
         const user = await userServices.forceRemoveUserById(req.params.id);
         return res.json({
             method: 'DELETE',
@@ -78,8 +75,7 @@ const deleteUserById = async (req: Request, res: Response) => {
 }
 const login = async (req: Request, res: Response) => {
     try {
-        const message = await userServices.login(req.body.username, req.body.password);
-        // if (message===successMessage.LOGIN_SUCCESS_ADMIN || message===successMessage.LOGIN_SUCCESS_USER);
+        const message = await userServices.login(req.body.username, req.body.password)
         return res.json({
             method: 'POST',
             description: 'Login user',
@@ -92,7 +88,7 @@ const login = async (req: Request, res: Response) => {
 
 const removeUserbyId = async (req: Request, res: Response) => {
     try {
-        const message = await userServices.removeUserbyId('633fed90bb83e055246464d3', req.params.id);
+        const message = await userServices.removeUserbyId('633fed90bb83e055246464d3',req.params.id);
         return res.json({
             method: 'DELETE',
             status: 'success',
