@@ -26,11 +26,11 @@ export async function createUser(data: IUser) {
 }
 
 export async function getAllUsers() {
-    return await User.find({}).select('username name dob address phonenumber refreshToken')
+    return await User.find({}).select('username name dob address phoneNumber refreshToken')
 }
 
 export async function getUserById(idUser: string) {
-    const user = await User.findById(idUser).select('username name dob address phonenumber refreshToken')
+    const user = await User.findById(idUser).select('username name dob address phoneNumber refreshToken')
     if (user === null) return errMessage.NOT_FOUND_USER;
     return user;
 }
@@ -40,21 +40,24 @@ export async function updateUserById(idUser: string, data: IUser) {
     return user;
 }
 
-export async function forceRemoveUserById(idUser: string) {
+// export async function removeUserbyId(idUserInSession: string, idUser: string) {
+//     const userInSession = await User.findOne({ _id: idUserInSession, roles: role.ROLE.ADMIN });
+//     if (userInSession) {
+//         const user = await User.findOne({ _id: idUser, roles: role.ROLE.ADMIN });
+//         if (user) {
+//             await User.deleteOne({ _id: idUser });
+//             return successMessage.REMOVED_USER_SUCCESS;
+//         } else return errMessage.CAN_NOT_REMOVE;
+//     } else return errMessage.CAN_NOT_REMOVE;
+// }
+
+export async function removeUserbyId(idUser: string) {
     const user = await User.deleteOne({ _id: idUser });
-    return user;
-}
-
-export async function removeUserbyId(idUserInSession: string, idUser: string) {
-    const userInSession = await User.findOne({ _id: idUserInSession, roles: role.ROLE.ADMIN });
-    if (userInSession) {
-        const user = await User.findOne({ _id: idUser, roles: role.ROLE.ADMIN });
-        if (user) {
-            await User.deleteOne({ _id: idUser });
-            return successMessage.REMOVED_USER_SUCCESS;
-        } else return errMessage.CAN_NOT_REMOVE;
-    } else return errMessage.CAN_NOT_REMOVE;
-
+    if (user) {
+        return successMessage.REMOVED_USER_SUCCESS;
+    } else {
+        return errMessage.CAN_NOT_REMOVE;
+    }
 }
 
 export async function login(username: string, password: string) {

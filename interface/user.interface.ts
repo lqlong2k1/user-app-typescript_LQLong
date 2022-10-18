@@ -11,6 +11,5 @@ export interface IUser {
     createdAt?: Date;
     updatedAt?: Date;
     __v?: Number;
-   
-}
 
+}

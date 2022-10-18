@@ -62,7 +62,7 @@ const updateUserById = async (req: Request, res: Response) => {
 
 const deleteUserById = async (req: Request, res: Response) => {
     try {
-        const user = await userServices.forceRemoveUserById(req.params.id);
+        const user = await userServices.removeUserbyId(req.params.id);
         return res.json({
             method: 'DELETE',
             status: 'success',
@@ -88,7 +88,7 @@ const login = async (req: Request, res: Response) => {
 
 const removeUserbyId = async (req: Request, res: Response) => {
     try {
-        const message = await userServices.removeUserbyId('633fed90bb83e055246464d3',req.params.id);
+        const message = await userServices.removeUserbyId(req.params.id);
         return res.json({
             method: 'DELETE',
             status: 'success',

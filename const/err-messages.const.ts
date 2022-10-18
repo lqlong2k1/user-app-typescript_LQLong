@@ -20,11 +20,11 @@ export const INVALID_FORMAT_BIRTHDAY: string = 'Date format is YYYY-MM-DD'
 //Login error:
 export const LOGIN_FAIL_PASSWORD: string = 'Invalid password'
 export const LOGIN_FAIL_USERNAME: string = 'User does not exist'
-export const LOGIN_FAIL_ACCESS_TOKEN: string ='Login fail'
+export const LOGIN_FAIL_ACCESS_TOKEN: string = 'Login fail'
 
 //Remove user:
 export const REMOVED_USER_FAIL: string = 'Remove user fail'
-export const CAN_NOT_REMOVE: string = 'FAIL! Can\'t remove this user'
+export const CAN_NOT_REMOVE: string = 'FAIL! Not found this user'
 
 //Search user by ID:
 export const NOT_FOUND_USER: string = 'Not found user'
